@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="box"></div>
+
+</body>
+<script type="module">
+    // App.js 或其他文件
+    import { fetchData } from './api.js'; // 导入 API 方法
+    console.log(fetchData);
+
+    async function fetchDataAndHandle () {
+        console.log(fetchData);
+
+        try {
+            console.log(fetchData);
+            const data = await fetchData();
+            console.log('Fetched data:', data);
+            // 处理返回的数据
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            // 处理错误
+        }
+    }
+
+    // 调用 API 方法
+    fetchDataAndHandle();
+
+    // function throttle (func, delay) {
+    //     let timerId;
+    //     let lastExecTime = 0;
+
+    //     return function (...args) {
+    //         const context = this;
+    //         const currentTime = Date.now();
+    //         // console.log(context);
+    //         if (currentTime - lastExecTime >= delay) {
+    //             clearTimeout(timerId);
+    //             func.apply(context, args);
+    //             lastExecTime = currentTime;
+    //         } else {
+    //             clearTimeout(timerId);
+    //             timerId = setTimeout(() => {
+    //                 func.apply(context, args);
+    //                 lastExecTime = currentTime;
+    //             }, delay - (currentTime - lastExecTime));
+    //         }
+    //     };
+    // }
+    // setInterval(() => {
+
+    // }, interval);
+    // function handleScroll () {
+    //     console.log(this);
+    //     console.log('Scroll event occurred');
+    // }
+    // const throttledHandleScroll = throttle(handleScroll, 500);
+
+    // window.addEventListener('scroll', throttledHandleScroll);
+    const box = document.getElementById('box');
+    let offsetX, offsetY;
+    // 当鼠标点击方块时，启用鼠标移动事件
+    box.addEventListener('mousedown', startMoving);
+
+    // 鼠标移动事件处理函数
+    function moveBox (event) {
+        console.log(event);
+        // 获取鼠标当前位置
+        const newX = event.clientX - offsetX;
+        const newY = event.clientY - offsetY;
+
+        // 设置方块的位置为鼠标当前位置
+        box.style.left = newX + 'px';
+        box.style.top = newY + 'px';
+    }
+
+    // 鼠标释放事件处理函数
+    function stopMoving () {
+        // 当鼠标释放时，移除鼠标移动事件监听器
+        document.removeEventListener('mousemove', moveBox);
+    }
+
+    // 鼠标点击事件处理函数
+    function startMoving (event) {
+        offsetX = event.clientX - box.offsetLeft;
+        offsetY = event.clientY - box.offsetTop;
+        // 添加鼠标移动事件监听器
+        document.addEventListener('mousemove', moveBox);
+
+        // 添加鼠标释放事件监听器
+        document.addEventListener('mouseup', stopMoving);
+    }
+
+</script>
+
+</html>

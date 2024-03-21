@@ -1,0 +1,15 @@
+.sl-markdown-content details summary span {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sl-markdown-content h2 {
+  border-left: 4px solid rgb(72, 81, 207);
+  padding-left: 10px;
+}
+.sl-markdown-content h3 {
+  border-left: 4px solid rgb(213, 114, 95);
+  padding-left: 10px;
+}
