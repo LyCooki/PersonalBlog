@@ -22,12 +22,24 @@ export default defineConfig({
       ],
       sidebar: [
         {
+          label: "JS",
+          autogenerate: { directory: "JS" },
+        },
+        {
           label: "TS",
           autogenerate: { directory: "TS" },
         },
         {
           label: "Vue",
           autogenerate: { directory: "Vue" },
+        },
+        {
+          label: "Css",
+          autogenerate: { directory: "CSS" },
+        },
+        {
+          label: "Vite",
+          autogenerate: { directory: "VITE" },
         },
       ],
     }),

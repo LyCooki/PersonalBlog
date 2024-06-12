@@ -5,42 +5,186 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
+    <!-- <style>
+        html {
+            font-size: 62.5%;
+        }
+
         #box {
-            width: 50px;
+            /* width: 50px; */
             height: 50px;
             background-color: red;
             position: absolute;
+            /* box-sizing: border-box; */
+            padding: 20px;
         }
-    </style>
+
+        .test {
+            width: 1000px;
+            height: 500px;
+            background-image: linear-gradient(105deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .9) 50%, transparent 50%), url(./src/assets/CSS-cascadeSpecificity.png);
+            background-size: 100%;
+        }
+
+        .form__input {
+            display: block;
+            box-sizing: border-box;
+            padding: 8px;
+        }
+
+        .form__input:focus {
+            outline: none;
+            border-bottom: 3px solid red;
+        }
+
+        /* .form__input:focus:invalid {
+            border-bottom: 3px solid red;
+        } */
+
+        .form__input:focus:valid {
+            border-bottom: 3px solid green;
+        }
+
+        .form__label {
+            display: block;
+            font-size: 10px;
+            margin-left: 10px;
+            /* color: red; */
+            transition: all .3s;
+        }
+
+        .form__input:placeholder-shown+.form__label {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-1rem);
+        }
+
+        .text__inner {
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .text__inner,
+        .text__inner::before,
+        .text__inner::after {
+
+            width: 30px;
+            display: inline-block;
+            height: 2px;
+            background-color: #000;
+        }
+
+        .text__inner::before,
+        .text__inner::after {
+            content: "";
+            position: absolute;
+            left: 0;
+        }
+
+        .text__inner::before {
+            top: -.8rem;
+        }
+
+        .text__inner::after {
+            top: .8rem;
+        }
+
+        .container {
+            width: 90%;
+            display: grid;
+            grid-template-rows: repeat(2, minmax(100px, max-content));
+            gap: 20px;
+            grid-template-columns: repeat(8, minmax(min-content, 1fr));
+        }
+
+        .container>* {
+            background-color: red;
+        }
+
+        %heading {
+            font-family: Arial, sans-serif;
+            font-size: 2.5rem;
+        }
+
+        .heading-1 {
+            @extend %heading;
+        }
+
+
+        .heading-2 {
+            @extend %heading;
+        }
+
+
+        .heading-3 {
+            @extend %heading;
+        }
+    </style> -->
 
 </head>
 
 <body>
-    <div id="box"></div>
+    <!-- <div id="box">asdasdas</div> -->
+    <div id="parent" style="border: 1px solid black;">
+        <div>12</div>
+        <div id="child" style="position: relative;top: 0; background-color: yellow;">Child</div>
+    </div>
+    <div class="test">
 
+    </div>
+
+    <form action="#">
+        <div class="form__group">
+            <input type="text" class="form__input" id="user" placeholder="Enter your fullname" required>
+            <label for="user" class="form__label">
+                Full Name
+            </label>
+        </div>
+        3<div class="form__group">
+            <input type="email" class="form__input" id="email" placeholder="Enter your fullname" required>
+            <label for="email" class="form__label">
+                Email
+            </label>
+        </div>
+    </form>
+    <div class="text">
+        <span class="text__inner">&nbsp;</span>
+    </div>
+
+    <div class="container">
+        <div class="text-1">1</div>
+        <div class="text-2">2</div>
+        <div class="text-3">3</div>
+        <div class="text-4">4</div>
+        <div class="text-5">5</div>
+        <div class="text-6">
+            <span>
+                666666666666666666666666666666
+            </span>
+        </div>
+    </div>
 </body>
 <script type="module">
     // App.js 或其他文件
-    import { fetchData } from './api.js'; // 导入 API 方法
-    console.log(fetchData);
+    // import { fetchData } from './api.js'; // 导入 API 方法
+    // console.log(fetchData);
 
-    async function fetchDataAndHandle () {
-        console.log(fetchData);
+    // async function fetchDataAndHandle () {
+    //     console.log(fetchData);
 
-        try {
-            console.log(fetchData);
-            const data = await fetchData();
-            console.log('Fetched data:', data);
-            // 处理返回的数据
-        } catch (error) {
-            console.error('Failed to fetch data:', error);
-            // 处理错误
-        }
-    }
+    //     try {
+    //         console.log(fetchData);
+    //         const data = await fetchData();
+    //         console.log('Fetched data:', data);
+    //         // 处理返回的数据
+    //     } catch (error) {
+    //         console.error('Failed to fetch data:', error);
+    //         // 处理错误
+    //     }
+    // }
 
-    // 调用 API 方法
-    fetchDataAndHandle();
+    // // 调用 API 方法
+    // fetchDataAndHandle();
 
     // function throttle (func, delay) {
     //     let timerId;
@@ -73,39 +217,40 @@
     // const throttledHandleScroll = throttle(handleScroll, 500);
 
     // window.addEventListener('scroll', throttledHandleScroll);
-    const box = document.getElementById('box');
-    let offsetX, offsetY;
-    // 当鼠标点击方块时，启用鼠标移动事件
-    box.addEventListener('mousedown', startMoving);
+    // const box = document.getElementById('box');
+    // let offsetX, offsetY;
+    // // 当鼠标点击方块时，启用鼠标移动事件
+    // box.addEventListener('mousedown', startMoving);
 
-    // 鼠标移动事件处理函数
-    function moveBox (event) {
-        console.log(event);
-        // 获取鼠标当前位置
-        const newX = event.clientX - offsetX;
-        const newY = event.clientY - offsetY;
+    // // 鼠标移动事件处理函数
+    // function moveBox (event) {
+    //     console.log(event);
+    //     // 获取鼠标当前位置
+    //     const newX = event.clientX - offsetX;
+    //     const newY = event.clientY - offsetY;
 
-        // 设置方块的位置为鼠标当前位置
-        box.style.left = newX + 'px';
-        box.style.top = newY + 'px';
-    }
+    //     // 设置方块的位置为鼠标当前位置
+    //     box.style.left = newX + 'px';
+    //     box.style.top = newY + 'px';
+    // }
 
-    // 鼠标释放事件处理函数
-    function stopMoving () {
-        // 当鼠标释放时，移除鼠标移动事件监听器
-        document.removeEventListener('mousemove', moveBox);
-    }
+    // // 鼠标释放事件处理函数
+    // function stopMoving () {
+    //     // 当鼠标释放时，移除鼠标移动事件监听器
+    //     document.removeEventListener('mousemove', moveBox);
+    // }
 
-    // 鼠标点击事件处理函数
-    function startMoving (event) {
-        offsetX = event.clientX - box.offsetLeft;
-        offsetY = event.clientY - box.offsetTop;
-        // 添加鼠标移动事件监听器
-        document.addEventListener('mousemove', moveBox);
+    // // 鼠标点击事件处理函数
+    // function startMoving (event) {
+    //     offsetX = event.clientX - box.offsetLeft;
+    //     offsetY = event.clientY - box.offsetTop;
+    //     // 添加鼠标移动事件监听器
+    //     document.addEventListener('mousemove', moveBox);
 
-        // 添加鼠标释放事件监听器
-        document.addEventListener('mouseup', stopMoving);
-    }
+    //     // 添加鼠标释放事件监听器
+    //     document.addEventListener('mouseup', stopMoving);
+    // }
+
 
 </script>
 

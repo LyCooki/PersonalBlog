@@ -525,6 +525,7 @@ let list2: Array<number> = [1, 2, 3];
 function identity<T>(arg: T): T {
   return arg;
 }
+//当你在调用 identity 函数时，你可以用任何类型来替换 T。例如，如果你调用 identity<number>(123)，那么在这个函数调用中，T 就代表了 number 类型。如果你调用 identity<string>('hello')，那么 T 就代表了 string 类型。
 //加<number>和不加都不影响代码运行，不加会自动识别，加了必须按照给定的类型传参
 const result = identity<number>(42); // 返回 42
 ```
