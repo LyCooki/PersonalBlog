@@ -8,7 +8,7 @@ description: A guide in my new Starlight docs site.
 TS 是 JS 的超集, 兼容 JS, 也提供强类型特性, 把 JS 提升了一个新的高度。</br>
 TS 在原生 JS 的基础上, 加了一层类型定义.<mark>TS 无法在浏览器中运行, 需要借助工具进行编译(compile)</mark>。如下图所示。</br>
 
-![ts编译图](../../../assets/TS-1.png)
+![ts编译图](@/assets/img/TS/TS-1.png)
 
 ## TS 的优点
 
@@ -403,6 +403,34 @@ class Animal {
   };
 }
 ```
+##### 抽象类
+
+**抽象类是一种特殊的类，它不能被实例化，只能被继承，抽象类中的抽象方法必须被子类实现。**
+
+```ts
+abstract class Animal {
+  constructor(public name: string) {}
+  abstract drawPoint(): void; //抽象方法，子类必须实现
+}
+
+class Dog extends Animal {
+  constructor(name: string) {
+    super(name);
+  }
+  drawPoint() {
+    console.log(this.name + " is drawing a point");
+  }
+}
+
+class Cat extends Animal {
+  constructor(name: string) {
+    super(name);
+  }
+  drawPoint() {
+    console.log(this.name + " is drawing a point");
+  }
+}
+```
 
 ### 访问修饰符 Access Modifier
 
@@ -557,6 +585,7 @@ function printValue(value: string | number) {
 ```
 
 **2. 实例判断 instanceof：使用 instanceof 操作符来检查变量是否属于某个类的实例。例如：**
+> 本质就是判断animal的原型链是否包含Dog.prototype或Cat.prototype。
 
 ```ts
 class Animal {}
@@ -609,6 +638,32 @@ function foo(input: string | number) {
   } else {
     // 在这里，input 的类型仍为 string | number
   }
+}
+```
+
+## 可以为NULL的类型
+**5. 当值为null或undefined时，您需要在对该值使用方法或属性之前测试这些值。就像在使用可选属性之前检查 undefined 一样，我们可以使用缩小范围来检查可能为 null 的值：**
+
+```ts
+//strictNullChecks off
+关闭严格空检查，允许值为null或undefined的变量
+//strictNullChecks on
+开启严格空检查，不允许值为null或undefined的变量
+function doSomething(x: string | null) {
+  if (x === null) {
+    // do nothing
+  } else {
+    console.log("Hello, " + x.toUpperCase());
+  }
+}
+```
+**6.翻译Non-null Assertion Operator (Postfix !)**
+
+```ts
+//TypeScript 还有一种特殊的语法，可以从类型中删除 null 和 undefined，而无需进行任何显式检查。写作 ！任何表达式之后实际上都是一个值不为 null 或未定义的类型断言：
+function liveDangerously(x?: number | null) {
+  // No error
+  console.log(x!.toFixed());
 }
 ```
 

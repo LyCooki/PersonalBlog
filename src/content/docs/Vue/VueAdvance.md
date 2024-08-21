@@ -47,7 +47,39 @@ description: A guide in my new Starlight docs site.
 
 ### vue props 属性
 
-1. 功能：让组件接收外部传过来的数据
+1. 功能：让组件接收外部传过来的数据，可以实时更新到子组件中。
+
+```vue
+//index.vue
+<script setup>
+import { defineProps } from "vue";
+const props = defineProps({
+  msg: String,
+});
+</script>
+
+<template>
+  <h2>{{ props.msg }}</h2>
+</template>
+
+//App.vue
+<script setup>
+import { ref } from 'vue'
+import index from './index.vue'
+const msg = ref('Hello World!')
+const text = ref('')
+function changeInputValue(){
+msg.value = text.value
+}
+</script>
+
+<template>
+<index :msg="msg" />
+<input v-model="text" @input="changeInputValue"></input>
+</template>
+
+```
+
 2. 传递数据：`<Demo name="xxx"/>`
 3. 接收数据：
 
@@ -955,7 +987,6 @@ new Vue({
    ```
 
    (3). 备注：若有多个元素需要过度，则需要使用：`<transition-group>`，且每个元素都要指定`key`值。
-
 ## vue 脚手架配置代理
 
 ### 方法一

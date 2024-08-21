@@ -9,7 +9,7 @@ description: A guide in my new Starlight docs site.
 
      (0,0,0,0) 分别代表的是 (内联样式，ID 选择器，类选择器，元素选择器)
 
-![css层叠与特异性图](../../../assets/CSS-cascadeSpecificity.png)
+![css层叠与特异性图](@/assets/img/CSS/CSS-cascadeSpecificity.png)
 
 1. CSS 声明标有!important 有最高优先级；
 
@@ -43,7 +43,7 @@ description: A guide in my new Starlight docs site.
 
 ### 属性值处理过程
 
-![CSS解析原理图](../../../assets/CSS-valueProcessing.png)
+![CSS解析原理图](@/assets/img/CSS/CSS-valueProcessing.png)
 
 1. 每一个属性都有初始值，如果没有定义的话会使用。
 

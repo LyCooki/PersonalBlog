@@ -5,7 +5,7 @@ description: A guide in my new Starlight docs site.
 
 ## 1. 使用 vite 打包过后，在使用 electron 打包的时候，出现了以下错误：
 
-![electron打包加载资源问题](../../../assets/vite-1.png)
+![electron打包加载资源问题](@/assets/img/VITE/vite-1.png)
 
 ### 解决方案
 
@@ -71,6 +71,7 @@ export default defineConfig({
     "moduleResolution": "node", // 指定模块解析策略，设置为 node 则可以识别 node_modules 目录 如果在 import {} from "lodash" 会报错是因为没有相对路径和绝对路径，增加该配置项则表明引入模块按照node环境解析。
     "skipLibCheck": true // 是否跳过检查node_modules目录的检查
     "module": "esNext", // 指定模块的生成方式，设置为 esnext 可以更好的兼容浏览器,默认es 3
+    "lib":["es2017","DOM"], // 指定编译的库文件，默认只包含 es2015 和 dom 两个库文件，可以根据需要增加或减少。
   }
 }
 ```
@@ -139,4 +140,50 @@ for (var i = 0; i < keys.length; i++) {
   var key = keys[i];
   console.log(key);
 }
+```
+
+## 3. 关于 vite 打包的一些指令解读
+
+```js
+//vite.config.js
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  build: {
+    // 打包输出路径 默认 dist
+    outDir: "dist",
+    // build 后是否压缩代码 默认 false
+    minify: false,
+  // 'terser'（默认值）:
+  // 使用 Terser 来压缩 JavaScript 代码。Terser 是一个高度优化的 JavaScript 压缩工具，能够显著减小文件大小，同时尽可能保持代码的运行效率。
+  // 'esbuild':
+  // 使用 Vite 自带的 esbuild 来压缩代码。Esbuild 是一个极其快速的 JavaScript 和 TypeScript 构建工具，相对于 Terser 来说，压缩速度更快，但压缩效果可能稍微逊色。
+  // false:
+  // 关闭代码压缩。选择此选项可以跳过压缩步骤，生成未经压缩的代码，这在某些调试场景或开发环境中可能会有帮助。
+  }
+```
+
+## 分包策略
+
+- 按需加载：按需加载是一种常见的分包策略，即在运行时动态加载某个模块。Vite 官方推荐的分包策略是按需加载，通过动态导入的方式来实现。
+- 预加载：预加载是一种更加激进的分包策略，即在运行时预先加载所有模块。这种策略可以有效减少网络请求的数量，提升页面的加载速度。
+- 代码拆分：代码拆分是一种更加复杂的分包策略，即将代码按照业务模块拆分成多个文件。这种策略可以有效减少浏览器的内存占用，提升页面的运行效率。
+
+```js
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            // 将第三方库打包到 vendor 代码块中
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
+});
 ```

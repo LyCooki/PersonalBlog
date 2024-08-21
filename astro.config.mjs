@@ -41,7 +41,30 @@ export default defineConfig({
           label: "Vite",
           autogenerate: { directory: "VITE" },
         },
+        {
+          label: "WebGL",
+          autogenerate: { directory: "WebGL" },
+        },
+        {
+          label: "项目",
+          autogenerate: { directory: "Project" },
+        },
+        {
+          label: "Node",
+          autogenerate: { directory: "Node" },
+        },
+        {
+          label: "Webpack",
+          autogenerate: { directory: "Webpack" },
+        },
       ],
     }),
   ],
+  vite: {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  },
 });
