@@ -14,3 +14,8 @@ pnpm-debug.log*
 .env.production
 # macOS-specific files
 .DS_Store
+
+.a.js
+.b.js
+.test.cjs
+.demo.html

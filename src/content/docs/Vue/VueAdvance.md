@@ -1480,8 +1480,7 @@ module.exports = {
          id: 666,
          title: '你好',
        },
-     }"
-   >跳转</router-link>
+     }">跳转</router-link>
    ```
 
 2. 接收参数：

@@ -1,6 +1,21 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
+const file = import.meta.glob("./src/content/docs/**/*.md");
+const labelArr = new Set();
+const sidebar = []
+ Object.keys(file).map(i=>{
+  const arr = i.split("/");
+  labelArr.add(arr.at(-2));
+});
+labelArr.forEach(i=>{
+  sidebar.push({
+    label: i,
+    autogenerate: { directory: i },
+  })
+})
+
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -20,44 +35,7 @@ export default defineConfig({
         // 你的自定义 CSS 文件的相对路径
         "./src/styles/custom.css",
       ],
-      sidebar: [
-        {
-          label: "JS",
-          autogenerate: { directory: "JS" },
-        },
-        {
-          label: "TS",
-          autogenerate: { directory: "TS" },
-        },
-        {
-          label: "Vue",
-          autogenerate: { directory: "Vue" },
-        },
-        {
-          label: "Css",
-          autogenerate: { directory: "CSS" },
-        },
-        {
-          label: "Vite",
-          autogenerate: { directory: "VITE" },
-        },
-        {
-          label: "WebGL",
-          autogenerate: { directory: "WebGL" },
-        },
-        {
-          label: "项目",
-          autogenerate: { directory: "Project" },
-        },
-        {
-          label: "Node",
-          autogenerate: { directory: "Node" },
-        },
-        {
-          label: "Webpack",
-          autogenerate: { directory: "Webpack" },
-        },
-      ],
+      sidebar,
     }),
   ],
   vite: {

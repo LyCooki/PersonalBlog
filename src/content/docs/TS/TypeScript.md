@@ -403,6 +403,7 @@ class Animal {
   };
 }
 ```
+
 ##### 抽象类
 
 **抽象类是一种特殊的类，它不能被实例化，只能被继承，抽象类中的抽象方法必须被子类实现。**
@@ -585,7 +586,8 @@ function printValue(value: string | number) {
 ```
 
 **2. 实例判断 instanceof：使用 instanceof 操作符来检查变量是否属于某个类的实例。例如：**
-> 本质就是判断animal的原型链是否包含Dog.prototype或Cat.prototype。
+
+> 本质就是判断 animal 的原型链是否包含 Dog.prototype 或 Cat.prototype。
 
 ```ts
 class Animal {}
@@ -641,8 +643,9 @@ function foo(input: string | number) {
 }
 ```
 
-## 可以为NULL的类型
-**5. 当值为null或undefined时，您需要在对该值使用方法或属性之前测试这些值。就像在使用可选属性之前检查 undefined 一样，我们可以使用缩小范围来检查可能为 null 的值：**
+## 可以为 NULL 的类型
+
+**5. 当值为 null 或 undefined 时，您需要在对该值使用方法或属性之前测试这些值。就像在使用可选属性之前检查 undefined 一样，我们可以使用缩小范围来检查可能为 null 的值：**
 
 ```ts
 //strictNullChecks off
@@ -657,7 +660,8 @@ function doSomething(x: string | null) {
   }
 }
 ```
-**6.翻译Non-null Assertion Operator (Postfix !)**
+
+**6.翻译 Non-null Assertion Operator (Postfix !)**
 
 ```ts
 //TypeScript 还有一种特殊的语法，可以从类型中删除 null 和 undefined，而无需进行任何显式检查。写作 ！任何表达式之后实际上都是一个值不为 null 或未定义的类型断言：
@@ -1067,4 +1071,33 @@ type Point = {
 type ReadOnlyPoint = {
   readonly [key in "x" | "y" | "z"]: number;
 }; //key会递遍历了字符串字面量类型x,y,z中的每一个成员。并且都附加上只读属性。
+```
+
+## tsconfig.json 的通用配置
+
+```json
+//tsconfig.json通用配置
+{
+    "compilweOptions":{
+        "module": "commonjs",
+        "types":["node"], //声明类型，使得ts-node支持对tsx的编译
+        "target": "es6",
+        "jsx":"react-jsx", //全局导入，不在需要每个文件定义react
+        "lib":["dom","dom.iterable","esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+            },
+        "include":["src/**/*"]
+    }
+}
 ```

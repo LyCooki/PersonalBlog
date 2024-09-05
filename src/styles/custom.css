@@ -12,4 +12,5 @@
 .sl-markdown-content h3 {
   border-left: 4px solid rgb(213, 114, 95);
   padding-left: 10px;
+  margin-left: 10px;
 }

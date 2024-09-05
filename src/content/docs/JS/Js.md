@@ -36,8 +36,8 @@ boundPrintValue(); // 输出: 42
 
 > call 方法会立即调用函数，并在调用时将 this 值设置为传递给它的第一个参数。call 还可以接受其他参数，这些参数会传递给被调用的函数。
 
-### 语法
 
+### 语法
 ```javascript
 function.call(thisArg, arg1, arg2, ...)
 thisArg：调用函数时 this 的值。
@@ -52,6 +52,29 @@ console.log(this.value);
 printValue.call(obj); // 输出: 42
 //在这个示例中，printValue 函数通过 call 方法被立即调用，并且 this 被设置为 obj。
 ```
+
+## Class 类细节
+
+> Class 本质是构造函数的语法糖，它只是语法糖，本质上还是函数。但类内部定义的方法是**不可枚举的**。和 ES5 的行为不一致。具体详情参考阮老师的<a href="https://es6.ruanyifeng.com/#docs/class" target="_blank">class 的基本语法</a>。
+### 语法
+```js
+class Point {
+  constructor(x, y) {
+    // ...
+  }
+
+  toString() {
+    // ...
+  }
+}
+
+Object.keys(Point.prototype);
+// []
+Object.getOwnPropertyNames(Point.prototype);
+// ["constructor","toString"]
+```
+
+
 
 ## 区别总结
 
