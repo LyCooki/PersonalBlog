@@ -1,17 +1,7 @@
-
 //写一个闭包的例子
 
-function createCounter() {
-  var count = 0;
-  return function() {
-    return count++;
-  };
-}
+const str = "asdasfaad";
 
-var counter1 = createCounter();
-var counter2 = createCounter();
-console.dir(counter1); // 0
-console.log(counter1()); // 0
-console.log(counter1()); // 1
-console.log(counter2()); // 0
-console.log(counter2()); // 1
+const a = [...str].reduce((a, b) => ((a[b]++||(a[b] = 1)),a), {})
+
+console.log(a);

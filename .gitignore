@@ -15,7 +15,7 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-.a.js
-.b.js
-.test.cjs
-.demo.html
+!a.js
+!b.js
+!test.cjs
+!demo.html

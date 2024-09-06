@@ -348,3 +348,146 @@ class App extends React.Component {
 }
 //这里父组件引入了子组件，本质上调用了setState就会触发render,但并不会因为每调用一次setState就执行一次render，如果不在子组件使用shouldComponentUpdate进行判断，就会导致子组件的重新渲染，造成性能问题。
 ```
+
+
+## 1.7版本后废弃的三个钩子
+
+- componentWillMount：已废弃，使用 componentDidMount 替代。
+- componentWillReceiveProps：已废弃，使用 static getDerivedStateFromProps 替代。
+- componentWillUpdate：已废弃，使用 componentDidUpdate 替代。
+
+废弃原因:
+
+这三个钩子都是在`render`阶段执行的,在fiber架构推出之前,render阶段不可打断,所以在大型复杂的组件嵌套项目中如果用到了多个render,可能会阻塞页面的渲染.推出fiber架构以后,低优先级的render阶段会被高优先级的render阶段打断.
+
+## 阻止组件渲染
+
+- 当一个函数组件返回一个null的时候,React不会渲染这个组件,不会调用组件的生命周期函数.
+```jsx
+function Person(props){
+  
+  if(props.name){
+    return <h2>{props.name}</h2>;
+  }
+  else return null
+}
+class App extends React.Component {
+
+  render() {
+    return (
+      <div>
+        <Person name="张三" age={20} onClick={this.handleClick} />
+      </div>
+    );
+  }
+}
+```
+
+## 受控组件
+
+- 受控组件：表单元素的值由 state 控制，即表单元素的值由 state 决定，而非 DOM 元素的值决定。
+
+```jsx
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: "",
+    };
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ inputValue: event.target.value });
+  };
+
+  render() {
+    const { inputValue } = this.state;
+    return (
+      <div>
+        <input type="text" value={inputValue} onChange={this.handleInputChange} />
+      </div>
+    );
+  }
+}
+//如果去掉onChange事件则input框不可修改.select、textArea同理.
+```
+### 受控组件变为非受控组件
+
+修改value属性为null属性即可.
+
+```jsx
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: "",
+    };
+  }
+  render() {
+    const { inputValue } = this.state;
+    return (
+      <div>
+        <input type="text" value={null}/>
+      </div>
+    );
+  }
+}
+```
+
+## props.children
+
+- 父组件可以向子组件传递任意 JSX 元素作为子组件的子节点。
+
+```jsx
+class Parent extends React.Component {
+  render() {
+    return <Child>{this.props.children}</Child>;
+  }
+}
+
+class Child extends React.Component {
+  render() {
+    return <div>{this.props.children}</div>;
+  }
+}
+
+ReactDOM.render(
+  <Parent>
+    <h1>Hello, world!</h1>
+    <p>This is a paragraph.</p>
+  </Parent>,
+  document.getElementById("root")
+);
+```
+## 属性组件传递
+  通过在父组件定义属性组件，然后在子组件中通过属性组件的形式传递属性。
+```jsx
+function Parent(props) {
+  return (
+    <div className="parent"> 
+      <div className="left">{props.left}</div>
+      <div className="right">{props.right}</div>
+    </div>
+  )
+}
+
+function Left(){
+  return (
+    <div>
+      我是左边
+    </div>
+  )
+}
+
+function Right(){
+  return(
+    <div>
+      我是右边
+    </div>
+  )
+}
+const root = ReactDom.createRoot(document.getElementById("root"));
+root.render(
+  <Parent left={<Left/>} right={<Right/>} />
+);
+```
