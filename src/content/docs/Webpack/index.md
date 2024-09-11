@@ -3,7 +3,7 @@ title: Webpack
 description: Webpack is a module bundler. It takes modules with dependencies and generates static assets.
 ---
 
-## webPack runtime 优化
+## Wpack runtime优化
 
     默认runtime会在每个js文件中打包一份所以我们需要把webpackruntime分离出来，这样可以减少文件体积，提高加载速度。
     优化方法：
@@ -11,12 +11,27 @@ description: Webpack is a module bundler. It takes modules with dependencies and
     // webpack.config.js
     module.exports = {
       optimization: {
-        //两种方式都可以
-        runtimeChunk: "runtime"
         runtimeChunk: {
           name: 'runtime'
         }
       }
+    }
+    ```
+
+## webpack dll优化
+
+    我们可以把一些常用的库和框架打包成dll文件，这样可以减少打包时间，提高加载速度。
+    优化方法：
+    ```js
+    // webpack.config.js
+    module.exports = {
+      plugins: [
+        new webpack.DllPlugin({
+          //还有其它参数，具体看文档
+          path: path.join(__dirname, 'dist', '[name]-manifest.json'),
+          name: '[name]_[hash]'
+        })
+      ]
     }
     ```
 
