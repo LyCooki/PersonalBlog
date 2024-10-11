@@ -16,7 +16,7 @@ React 的主要优点：
 - 虚拟 DOM：React 使用虚拟 DOM，它将真实 DOM 与虚拟 DOM 进行比较，并只更新需要更新的部分，从而提高性能。
 - 单向数据流：React 的单向数据流使得数据流动更加简单，更容易理解。
 - 跨平台：React 可以运行在浏览器、服务器、原生应用等多种环境中。
-
+  
 ## 组件
 
 ### 无状态组件
@@ -300,7 +300,7 @@ class App extends React.Component {
 ### 2.更新阶段
 
 1. componentWillReceiveProps(nextProps)：组件接收到新的 props 时调用，只调用一次。
-2. shouldComponentUpdate(nextProps, nextState)：组件判断是否需要更新时调用，返回 true 或 false。
+2. shouldComponentUpdate(nextProps, nextState)：组件判断是否需要更新时调用，**控制力度更细**返回 true 或 false。
 3. componentWillUpdate(nextProps, nextState)：组件即将更新时调用，只调用一次。
 4. render()：组件渲染时调用，返回 JSX 元素。
 5. componentDidUpdate(prevProps, prevState)：组件更新完成时调用，只调用一次。
@@ -349,8 +349,7 @@ class App extends React.Component {
 //这里父组件引入了子组件，本质上调用了setState就会触发render,但并不会因为每调用一次setState就执行一次render，如果不在子组件使用shouldComponentUpdate进行判断，就会导致子组件的重新渲染，造成性能问题。
 ```
 
-
-## 1.7版本后废弃的三个钩子
+## 1.7 版本后废弃的三个钩子
 
 - componentWillMount：已废弃，使用 componentDidMount 替代。
 - componentWillReceiveProps：已废弃，使用 static getDerivedStateFromProps 替代。
@@ -358,21 +357,19 @@ class App extends React.Component {
 
 废弃原因:
 
-这三个钩子都是在`render`阶段执行的,在fiber架构推出之前,render阶段不可打断,所以在大型复杂的组件嵌套项目中如果用到了多个render,可能会阻塞页面的渲染.推出fiber架构以后,低优先级的render阶段会被高优先级的render阶段打断.
+这三个钩子都是在`render`阶段执行的,在 fiber 架构推出之前,render 阶段不可打断,所以在大型复杂的组件嵌套项目中如果用到了多个 render,可能会阻塞页面的渲染.推出 fiber 架构以后,低优先级的 render 阶段会被高优先级的 render 阶段打断.
 
 ## 阻止组件渲染
 
-- 当一个函数组件返回一个null的时候,React不会渲染这个组件,不会调用组件的生命周期函数.
+- 当一个函数组件返回一个 null 的时候,React 不会渲染这个组件,不会调用组件的生命周期函数.
+
 ```jsx
-function Person(props){
-  
-  if(props.name){
+function Person(props) {
+  if (props.name) {
     return <h2>{props.name}</h2>;
-  }
-  else return null
+  } else return null;
 }
 class App extends React.Component {
-
   render() {
     return (
       <div>
@@ -404,16 +401,21 @@ class App extends React.Component {
     const { inputValue } = this.state;
     return (
       <div>
-        <input type="text" value={inputValue} onChange={this.handleInputChange} />
+        <input
+          type="text"
+          value={inputValue}
+          onChange={this.handleInputChange}
+        />
       </div>
     );
   }
 }
 //如果去掉onChange事件则input框不可修改.select、textArea同理.
 ```
+
 ### 受控组件变为非受控组件
 
-修改value属性为null属性即可.
+修改 value 属性为 null 属性即可.
 
 ```jsx
 class App extends React.Component {
@@ -427,7 +429,7 @@ class App extends React.Component {
     const { inputValue } = this.state;
     return (
       <div>
-        <input type="text" value={null}/>
+        <input type="text" value={null} />
       </div>
     );
   }
@@ -459,35 +461,40 @@ ReactDOM.render(
   document.getElementById("root")
 );
 ```
+
 ## 属性组件传递
-  通过在父组件定义属性组件，然后在子组件中通过属性组件的形式传递属性。
+
+通过在父组件定义属性组件，然后在子组件中通过属性组件的形式传递属性。
+
 ```jsx
 function Parent(props) {
   return (
-    <div className="parent"> 
+    <div className="parent">
       <div className="left">{props.left}</div>
       <div className="right">{props.right}</div>
     </div>
-  )
+  );
 }
 
-function Left(){
-  return (
-    <div>
-      我是左边
-    </div>
-  )
+function Left() {
+  return <div>我是左边</div>;
 }
 
-function Right(){
-  return(
-    <div>
-      我是右边
-    </div>
-  )
+function Right() {
+  return <div>我是右边</div>;
 }
 const root = ReactDom.createRoot(document.getElementById("root"));
-root.render(
-  <Parent left={<Left/>} right={<Right/>} />
-);
+root.render(<Parent left={<Left />} right={<Right />} />);
 ```
+
+### memo
+
+#### React.memo(组件)、useMemo()
+
+> memo 的本质： 允许你的组件在 props 没有改变的情况下跳过重新渲染。
+> 该方法类似于 pureComponent 会遍历所有的 props，只要引用发生变化就会重新渲染组件。
+
+使用场景：
+
+> 当项目有一些复杂计算的时候，使用 memo 可以将其缓存起来避免重复计算浪费性能。
+

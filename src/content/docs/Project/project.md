@@ -60,8 +60,8 @@ import "@/style/index.scss";
 
 ### Element-Plus 表格控制样式修改方式
 
-![根据返回的数据来判断表格的样式](image.png)
-![代码对应的页面效果](image-1.png)
+![根据返回的数据来判断表格的样式](@/assets/img/Project/image.png)
+![代码对应的页面效果](@/assets/img/Project/image-1.png)
 
 ```js
 //这里index和row即为插槽循环的索引和数据
@@ -322,3 +322,7 @@ export const http = new Http();
   </div>
 </template>
 ```
+
+### 多页面的一些问题
+
+  多页面跳转会导致重新加载资源，会影响性能。

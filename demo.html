@@ -8,64 +8,46 @@
     <title>Document</title>
     <script src="./test.cjs"></script>
     <style>
-        .anchor {
-            anchor-name: --abc;
-        }
-
-        .text {
-            position: absolute;
-            position-anchor: --abc;
-            bottom: anchor(center);
-            right: anchor(left);
-            /* background-color: black;
-            color: #fff; */
-        }
-
-        .anchor {
-            background: linear-gradient(45deg, blueviolet, blue);
-            font-size: 2rem;
-            display: grid;
-            place-items: center;
-            border-radius: 100%;
-            aspect-ratio: 1 / 1;
-            width: 3.5rem;
-            line-height: 0;
-            margin-top: 60dvh;
-
-            p {
-                filter: brightness(2);
-            }
-        }
-
-        .text {
-            font-family: system-ui, sans-serif;
-            background: #333;
-            border-radius: 0.75rem;
-            color: white;
-            padding: 1rem;
-            max-width: 250px;
-            line-height: 1.5;
-        }
-
         body {
-            display: grid;
-            grid-template-rows: 1fr;
+            display: flex;
             justify-content: center;
+            align-items: center;
             height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .animation {
+            width: 120px;
+            /* 图像的宽度 */
+            height: 120px;
+            /* 图像的高度 */
+            background: url('https://qcloudimg.tencent-cloud.cn/raw/af14217f927eedc0c3c403ddb0b4a8a3.png') no-repeat;
+            background-position: 0 0;
+            background-size: auto 2040px;
+            /* 调整背景图像的高度 */
+            cursor: pointer;
+        }
+
+        .animation:hover {
+            animation: mouse-in 1s 1 steps(17, jump-end) alternate;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes mouse-in {
+            from {
+                background-position-y: 0;
+            }
+
+            to {
+                background-position-y: -2040px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="anchor">
-        <p>⚓︎</p>
-    </div>
-
-    <div class="text">
-        <p>我是一个锚点定位元素
-        <p>
-            <code>code秘密花园</code>
-    </div>
+    <div class="animation"></div>
 </body>
 
 </html>
